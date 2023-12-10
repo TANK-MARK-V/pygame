@@ -7,7 +7,7 @@ if __name__ == '__main__':
     running = True
     size = width, height = 1920, 1080
     screen = pygame.display.set_mode(size)
-    screen.fill(pygame.Color('black'))
+    screen.blit(pygame.image.load('zqwt.png').convert_alpha(), (0, 0))
     buttons = class_button.Buttons(screen)
     while running:
         for event in pygame.event.get():

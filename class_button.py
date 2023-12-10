@@ -3,7 +3,6 @@ import pygame
 
 class Buttons:  # Функция создания кнопок
     def __init__(self, screen, pause=False):
-        screen.fill((0, 0, 0))
         font = pygame.font.Font(None, 120)
         self.start = False
 
