@@ -53,7 +53,7 @@ class Buttons:  # Функция создания кнопок
         if not self.start:
             self.check_pos(screen, pygame.mouse.get_pos(), self.coords)  # Проверка на наводку на кнопку
             if event.type == pygame.MOUSEBUTTONDOWN:
-                answer = self.check_do(pygame.mouse.get_pos(), self.coords)  # Нажатие на кнопку
+                answer = self.check_do(pygame.mouse.get_pos(), self.coords)  # Проверка на нажатие на кнопку
                 if answer == 'Играть':
                     self.start = True
                 elif answer == 'Выйти':
