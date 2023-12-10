@@ -20,5 +20,5 @@ if __name__ == '__main__':
                 buttons = class_button.Buttons(screen, pause=True)  # "Играть" меняется на "Продолжить"
                 running = False
                 # Вместо последней строки будет открытие другого класса для первого уровня,
-                # который будет принимать то же самое
+                # который будет принимать screen и event
     pygame.quit()
