@@ -50,13 +50,12 @@ class Buttons:  # Функция создания кнопок
                              (coords[2], coords[0][1] + coords[2] + 10, coords[1][0], coords[1][1]), 1)
 
     def menu(self, screen, event):
-        if not self.start:
-            self.check_pos(screen, pygame.mouse.get_pos(), self.coords)  # Проверка на наводку на кнопку
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                answer = self.check_do(pygame.mouse.get_pos(), self.coords)  # Проверка на нажатие на кнопку
-                if answer == 'Играть':
-                    self.start = True
-                elif answer == 'Выйти':
-                    return False
-            pygame.display.flip()
+        self.check_pos(screen, pygame.mouse.get_pos(), self.coords)  # Проверка на наводку на кнопку
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            answer = self.check_do(pygame.mouse.get_pos(), self.coords)  # Проверка на нажатие на кнопку
+            if answer == 'Играть':
+                self.start = True
+            elif answer == 'Выйти':
+                return False
+        pygame.display.flip()
         return True
