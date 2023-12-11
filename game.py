@@ -11,7 +11,8 @@ if __name__ == '__main__':
     buttons = class_button.Buttons(screen)
     while running:
         for event in pygame.event.get():
-            running = buttons.menu(screen, event)  # Открытие меню
+            if not buttons.start:
+                running = buttons.menu(screen, event)  # Открытие меню
             if event.type == pygame.QUIT:
                 running = False
             if not running:
