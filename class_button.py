@@ -6,6 +6,7 @@ class Buttons:  # Функция создания кнопок
         screen.blit(pygame.image.load('zqwt.png').convert_alpha(), (0, 0))
         font = pygame.font.Font(None, 120)
         self.start = False
+        self.pause = pause
 
         if not pause:
             self.play = font.render("Играть", True, pygame.Color('yellow'))
@@ -57,5 +58,4 @@ class Buttons:  # Функция создания кнопок
                 self.start = True
             elif answer == 'Выйти':
                 return False
-        pygame.display.flip()
         return True
