@@ -21,7 +21,13 @@ class Frames:  # Класс фреймов, для подсчёта тиков
             self.fall = True
             player.fall = False
             self.start_fall = self.count
-        if self.jump and self.count - self.start_jump < FPS:
-            player.moving('jump')
+        if self.jump:
+            if self.count - self.start_jump < FPS:  # Проверка на то, что игрок ещё должен подниматься
+                player.moving('jump')
+            else:  # Игрок должен начать падать
+                self.start_jump = 0
+                self.jump = False
+                self.fall = True
+                self.start_fall = self.count
         if self.fall:
             player.moving('fall', fall=self.count - self.start_fall)
