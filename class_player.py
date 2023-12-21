@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):  # Класс игрока
 
     def moving(self, todo, fall=0):  # Двигать игрока
         if todo == 'jump':
-            self.rect = self.rect.move(0, -12)
+            self.rect = self.rect.move(0, -24)
         if todo == 'fall' and self.can_fall:
             self.rect = self.rect.move(0, fall)
         if todo == 'right':

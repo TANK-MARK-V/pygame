@@ -18,12 +18,12 @@ class Frames:  # Класс фреймов, для подсчёта тиков
         else:
             player.can_fall = False
         if buttons.start:
-            self.count += 2  # Счёт фреймов
+            self.count += 1  # Счёт фреймов
         if player.jump:  # Если прыгает
             if not self.jump:  # Прыжок только начинается или уже начат
                 self.start_jump = self.count
                 self.jump = True
-            if self.count - self.start_jump < FPS // 2:  # Проверка на то, что игрок ещё должен подниматься
+            if self.count - self.start_jump < FPS // 4:  # Проверка на то, что игрок ещё должен подниматься
                 player.moving('jump')
             else:  # Игрок должен начать падать
                 self.start_jump = 0
@@ -35,7 +35,7 @@ class Frames:  # Класс фреймов, для подсчёта тиков
             if not self.fall:  # Падение только началось или уже начато
                 self.start_fall = self.count
                 self.fall = True
-            player.moving('fall', fall=(self.count - self.start_fall) // 2)
+            player.moving('fall', fall=self.count - self.start_fall)
         if player.right:
             player.moving('right')
         if player.left:
