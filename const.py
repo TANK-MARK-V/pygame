@@ -6,13 +6,20 @@ FPS = 50
 size = width, height = 1920, 1080
 pause_size = 50
 pause_size = (width - pause_size * 2, pause_size)
+sprites = 128
+barotraum = height - sprites - 50
+floor = 80
+bloks = (300, 100, 150)
+bloks = ((0, height - floor - bloks[2] - bloks[1], bloks[0], height - floor - bloks[2]),
+         (bloks[0], height - floor - bloks[2], bloks[0] + bloks[2], height - floor),
+         (width - bloks[0], height - floor - bloks[2] - bloks[1], width, height - floor - bloks[2]),
+         (width - bloks[0] - bloks[2], height - floor - bloks[2], width - bloks[0], height - floor),
+         (bloks[0] + 150, height - floor - bloks[2] * 2 - bloks[1] - 150,
+          width - bloks[0] - 150, height - floor - bloks[2] * 2 - 150))
+floor = ((0, height - floor), (width, floor))
 
 player_group = pygame.sprite.Group()
 enemy = pygame.sprite.Group()
-
-sprites = 256
-
-barotraum = 700
 
 
 def load_image(name, colorkey=None):

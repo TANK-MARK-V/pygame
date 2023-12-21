@@ -17,6 +17,9 @@ class Player(pygame.sprite.Sprite):  # Класс игрока
         self.frem = 0
         self.jump = False
         self.fall = False
+        self.right = False
+        self.left = False
+        self.reverse = False
 
         self.hp = 3
 
@@ -26,25 +29,30 @@ class Player(pygame.sprite.Sprite):  # Класс игрока
         for j in range(rows):
             for i in range(columns):
                 frame_location = (self.rect.w * i, self.rect.h * j)
-                self.frames.append(pygame.transform.flip(sheet.subsurface(pygame.Rect(
-                    frame_location, self.rect.size)), True, False))
+                self.frames.append(pygame.transform.scale(pygame.transform.flip(sheet.subsurface(pygame.Rect(
+                    frame_location, self.rect.size)), True, False), (const.sprites, const.sprites)))
 
-    def update(self):
+    def update(self, todo):
         self.cur_frame = (self.cur_frame + 1) % len(self.frames)
-        self.image = self.frames[self.cur_frame]
+        if self.reverse:  # Если игрок шёл в другую сторону
+            self.image = pygame.transform.flip(self.frames[self.cur_frame], True, False)
+        else:
+            self.image = self.frames[self.cur_frame]
 
-    def moving(self, todo, fall=0):
+    def moving(self, todo, fall=0):  # Двигать игрока
         if todo == 'jump':
-            self.rect = self.rect.move(0, -2)
+            self.rect = self.rect.move(0, -12)
         if todo == 'fall' and self.can_fall:
             self.rect = self.rect.move(0, fall)
         if todo == 'right':
+            self.reverse = False
             self.rect = self.rect.move(FPS // 5, 0)
         if todo == 'left':
+            self.reverse = True
             self.rect = self.rect.move(-FPS // 5, 0)
-        if self.frem % (FPS // 10) == 0:
-            self.update()
+        if self.frem % (FPS // 10) == 0:  # Обновление фрейма через определённое кол-во времени
+            self.update(todo)
 
-    def hit(self, dmg):
+    def hit(self, dmg):  # Не реализованная на данный момент функция
         if pygame.sprite.spritecollideany(self, const.enemy):
             self.hp -= dmg

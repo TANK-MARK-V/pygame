@@ -4,7 +4,7 @@ import const
 
 class Buttons:  # Функция создания кнопок
     def __init__(self, screen, pause=False):
-        screen.blit(const.load_image('zqwt.png').convert_alpha(), (0, 0))
+        screen.blit(pygame.transform.scale(const.load_image('zqwt.png'), const.size).convert_alpha(), (0, 0))
         font = pygame.font.Font(None, 120)
         self.start = False
         self.pause = pause

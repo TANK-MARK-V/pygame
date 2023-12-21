@@ -4,6 +4,7 @@ import class_frame
 import class_introduce
 import class_button
 import class_pause
+import class_room
 import const
 
 if __name__ == '__main__':
@@ -14,6 +15,7 @@ if __name__ == '__main__':
     running = True
     screen = pygame.display.set_mode(const.size)
 
+    room = class_room.Room(screen)
     pause = class_pause.Pause(screen, const.pause_size)
     frame = class_frame.Frames()
     inro = class_introduce.Introduce()
@@ -22,7 +24,6 @@ if __name__ == '__main__':
     const.player_group.add(player)
 
     while running:
-        frame.check(player)
         player.frem = frame.count
         for event in pygame.event.get():
             if not buttons.start:
@@ -38,18 +39,36 @@ if __name__ == '__main__':
                 if event.key == pygame.K_ESCAPE and buttons.start:  # Проверка на нажатие паузы через "esc"
                     buttons = class_button.Buttons(screen, pause=True)
 
-                if event.key == pygame.K_y and inro.question:  # Проверка на ответ игрока
-                    inro.ready = True
-                    inro.question = False
-                if event.key == pygame.K_n and inro.question:
-                    running = False
+                if inro.question:  # Проверка на ответ игрока
+                    if event.key == pygame.K_y:
+                        inro.ready = True
+                        inro.question = False
+                        player.rect.x = const.width // 2 - const.sprites // 2
+                        player.rect.y = const.floor[0][1] - const.sprites
+                    if event.key == pygame.K_n:
+                        running = False
+
+                if inro.ready:
+                    if (event.key == pygame.K_w or event.key == pygame.K_UP) and not player.can_fall:  # Игрок может прыгать только на земле
+                        player.jump = True
+                    if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+                        player.right = True
+                    if event.key == pygame.K_a or event.key == pygame.K_LEFT:
+                        player.left = True
+            if event.type == pygame.KEYUP:  # Кнопку отпустили
+                if inro.ready:
+                    if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+                        player.right = False
+                    if event.key == pygame.K_a or event.key == pygame.K_LEFT:
+                        player.left = False
 
         if buttons.start:  # Игрок нажал "Играть"
             buttons.pause = True
             if not inro.ready:  # Проигрывание вступительного ролика
                 inro.show(screen, player)
             else:  # Основная часть игры
-                pass
+                frame.check(player, buttons)
+                room.drawing()
         if buttons.start:  # Игрок не в меню паузы
             pause.draw_pause()
         pygame.display.flip()
