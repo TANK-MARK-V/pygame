@@ -7,6 +7,13 @@ size = width, height = 1920, 1080
 pause_size = 50
 pause_size = (width - pause_size * 2, pause_size)
 
+player_group = pygame.sprite.Group()
+enemy = pygame.sprite.Group()
+
+sprites = 256
+
+barotraum = 700
+
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -22,6 +29,5 @@ def load_image(name, colorkey=None):
     else:
         image = image.convert_alpha()
     return image
-
 
 # Нужные переменные и функции

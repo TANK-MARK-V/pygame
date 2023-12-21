@@ -12,10 +12,13 @@ class Player(pygame.sprite.Sprite):  # Класс игрока
         self.cur_frame = 0
         self.image = self.frames[self.cur_frame]
         self.rect = self.rect.move(x, y)
+
         self.can_fall = False
         self.frem = 0
         self.jump = False
         self.fall = False
+
+        self.hp = 3
 
     def cut_sheet(self, sheet, columns, rows):
         self.rect = pygame.Rect(0, 0, sheet.get_width() // columns,
@@ -41,3 +44,7 @@ class Player(pygame.sprite.Sprite):  # Класс игрока
             self.rect = self.rect.move(-FPS // 5, 0)
         if self.frem % (FPS // 10) == 0:
             self.update()
+
+    def hit(self, dmg):
+        if pygame.sprite.spritecollideany(self, const.enemy):
+            self.hp -= dmg
