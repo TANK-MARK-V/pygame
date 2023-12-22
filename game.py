@@ -5,6 +5,7 @@ import class_introduce
 import class_button
 import class_pause
 import class_room
+import class_borders
 import const
 
 if __name__ == '__main__':
@@ -20,8 +21,21 @@ if __name__ == '__main__':
     frame = class_frame.Frames()
     inro = class_introduce.Introduce()
     buttons = class_button.Buttons(screen)
-    player = class_player.Player(const.load_image("герой.png", -1), 1, 1, 0, const.barotraum)
+    player = class_player.Player(const.load_image("герой.png", -1), 2, 1, 0, const.barotraum)
     const.player_group.add(player)
+
+    for blok in const.bloks:  # Границы блоков
+        x1, y1, x2, y2 = blok
+        const.up.add(class_borders.Border(x1, y1, x2, y1 + 1))
+        const.down.add(class_borders.Border(x1, y2 - 1, x2, y2))
+        const.left.add(class_borders.Border(x1, y1, x1 + 1, y2))
+        const.right.add(class_borders.Border(x2 - 1, y1, x2, y2))
+    x1, y1, x2, y2 = const.floor[0][0], const.floor[0][1], const.floor[0][0] + const.floor[1][0], const.floor[0][1] + \
+                                                           const.floor[1][1]
+    const.up.add(class_borders.Border(x1, y1, x2, y1 + 1))
+    const.down.add(class_borders.Border(x1, y2 - 1, x2, y2))
+    const.left.add(class_borders.Border(x1, y1, x1 + 1, y2))
+    const.right.add(class_borders.Border(x2 - 1, y1, x2, y2))
 
     while running:
         player.frem = frame.count
@@ -30,7 +44,7 @@ if __name__ == '__main__':
                 running = buttons.menu(screen, event)  # Открытие меню
             if event.type == pygame.QUIT:
                 running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:   # Нажата мышка
+            if event.type == pygame.MOUSEBUTTONDOWN:  # Нажата мышка
                 if buttons.pause:
                     if pause.check_do(pygame.mouse.get_pos(), const.pause_size):  # Проверка на нажатие паузы c мышки
                         buttons = class_button.Buttons(screen, pause=True)
@@ -49,7 +63,8 @@ if __name__ == '__main__':
                         running = False
 
                 if inro.ready:
-                    if (event.key == pygame.K_w or event.key == pygame.K_UP) and not player.can_fall:  # Игрок может прыгать только на земле
+                    if (event.key == pygame.K_w or event.key == pygame.K_UP) and not player.can_move[1]:
+                        # Игрок может прыгать только на земле
                         player.jump = True
                     if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                         player.right = True

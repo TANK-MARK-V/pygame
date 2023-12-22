@@ -13,13 +13,13 @@ class Player(pygame.sprite.Sprite):  # Класс игрока
         self.image = self.frames[self.cur_frame]
         self.rect = self.rect.move(x, y)
 
-        self.can_fall = False
-        self.frem = 0
+        self.count = 0
         self.jump = False
         self.fall = False
         self.right = False
         self.left = False
         self.reverse = False
+        self.can_move = (True, False, True, True)
 
         self.hp = 3
 
@@ -39,18 +39,19 @@ class Player(pygame.sprite.Sprite):  # Класс игрока
         else:
             self.image = self.frames[self.cur_frame]
 
-    def moving(self, todo, fall=0):  # Двигать игрока
-        if todo == 'jump':
+    def moving(self, todo):  # Двигать игрока
+        self.count += 1
+        if todo == 'jump' and self.can_move[0]:
             self.rect = self.rect.move(0, -24)
-        if todo == 'fall' and self.can_fall:
-            self.rect = self.rect.move(0, fall)
-        if todo == 'right':
+        if todo == 'fall' and self.can_move[1]:
+            self.rect = self.rect.move(0, 15)
+        if todo == 'right' and self.can_move[3]:
             self.reverse = False
             self.rect = self.rect.move(FPS // 5, 0)
-        if todo == 'left':
+        if todo == 'left' and self.can_move[2]:
             self.reverse = True
             self.rect = self.rect.move(-FPS // 5, 0)
-        if self.frem % (FPS // 10) == 0:  # Обновление фрейма через определённое кол-во времени
+        if self.count % (FPS // 10) == 0:  # Обновление фрейма через определённое кол-во времени
             self.update(todo)
 
     def hit(self, dmg):  # Не реализованная на данный момент функция
