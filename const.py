@@ -3,7 +3,10 @@ import os
 import sys
 
 FPS = 50
-size = width, height = 1920, 1080
+if 1:
+    size = width, height = 1920, 1080
+else:
+    size = width, height = 1600, 900
 pause_size = 50
 pause_size = (width - pause_size * 2, pause_size)
 sprites = 128
@@ -24,6 +27,8 @@ down = pygame.sprite.Group()
 up = pygame.sprite.Group()
 left = pygame.sprite.Group()
 right = pygame.sprite.Group()
+dop_left = pygame.sprite.Group()
+dop_right = pygame.sprite.Group()
 
 
 def load_image(name, colorkey=None):
