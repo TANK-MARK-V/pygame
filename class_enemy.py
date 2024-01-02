@@ -16,7 +16,7 @@ class Enemy(pygame.sprite.Sprite):  # Класс игрока
             self.rect = self.rect.move(const.width - const.sprites, const.floor[0][1] - const.sprites)
             self.image = pygame.transform.flip(const.load_image('Рядовое яйцо.png', -1), True, False)
 
-    def update(self, player):
+    def update(self, player):  # Враги идут в сторону игрока
         if self.rect.x < player.rect.x:
             if self.rotation == 'left':
                 self.image = pygame.transform.flip(self.image, True, False)

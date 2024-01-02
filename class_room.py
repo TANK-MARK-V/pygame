@@ -5,9 +5,10 @@ import const
 class Room:  # Класс для основной игры
     def __init__(self, screen):
         self.screen = screen
-        self.image = pygame.transform.scale(const.load_image("Яичное место.png"), (const.size))
+        self.image = pygame.transform.scale(const.load_image("Яичное место.png"), const.size)
         self.bloks = const.bloks
         self.enemys = 0
+        self.rade = 0
 
     def drawing(self):  # Все объекты
         self.screen.blit(self.image, (0, 0))

@@ -22,6 +22,7 @@ class Player(pygame.sprite.Sprite):  # Класс игрока
         self.can_move = (True, False, True, True)
 
         self.hp = 3
+        self.killed = 0
 
     def cut_sheet(self, sheet, columns, rows):
         self.rect = pygame.Rect(0, 0, sheet.get_width() // columns,
@@ -53,7 +54,3 @@ class Player(pygame.sprite.Sprite):  # Класс игрока
             self.rect = self.rect.move(-FPS // 5, 0)
         if self.count % (FPS // 10) == 0:  # Обновление фрейма через определённое кол-во времени
             self.update(todo)
-
-    def hit(self, dmg):  # Не реализованная на данный момент функция
-        if pygame.sprite.spritecollideany(self, const.enemy):
-            self.hp -= dmg
