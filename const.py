@@ -2,6 +2,12 @@ import pygame
 import os
 import sys
 import class_borders
+import class_frame
+import class_introduce
+import class_button
+import class_pause
+import class_room
+import class_attack
 
 FPS = 50
 if 1:
@@ -71,5 +77,13 @@ def make_bloks():
     # Дополнительная коллизия, если босс не готов получать урон
     class_borders.Border(bloks[1][0] - 1, bloks[2][3], bloks[1][0], bloks[1][1]).add(dop_left)
     class_borders.Border(bloks[0][2] + 1, bloks[2][3], bloks[0][2], bloks[0][1]).add(dop_right)
+
+
+def make_prep(screen, button=False):  # Создание классов
+    if not button:
+        return class_button.Buttons(screen), class_introduce.Introduce(), class_pause.Pause(screen, pause_size), \
+            class_frame.Frames(), class_room.Room(screen), class_attack.Attack()
+    else:
+        return class_button.Buttons(screen, pause=True)
 
 # Нужные переменные и функции

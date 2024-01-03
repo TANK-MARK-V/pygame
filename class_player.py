@@ -1,8 +1,6 @@
 import pygame
 import const
 
-FPS = const.FPS
-
 
 class Player(pygame.sprite.Sprite):  # Класс игрока
     def __init__(self, sheet, columns, rows, x, y):
@@ -48,9 +46,9 @@ class Player(pygame.sprite.Sprite):  # Класс игрока
             self.rect = self.rect.move(0, 15)
         if todo == 'right' and self.can_move[3]:
             self.reverse = False
-            self.rect = self.rect.move(FPS // 5, 0)
+            self.rect = self.rect.move(const.FPS // 5, 0)
         if todo == 'left' and self.can_move[2]:
             self.reverse = True
-            self.rect = self.rect.move(-FPS // 5, 0)
-        if self.count % (FPS // 10) == 0:  # Обновление фрейма через определённое кол-во времени
+            self.rect = self.rect.move(-const.FPS // 5, 0)
+        if self.count % (const.FPS // 10) == 0:  # Обновление фрейма через определённое кол-во времени
             self.update(todo)

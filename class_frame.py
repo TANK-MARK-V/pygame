@@ -2,8 +2,6 @@ import pygame
 import const
 import class_enemy
 
-FPS = const.FPS
-
 
 class Frames:  # Класс фреймов, для подсчёта тиков
     def __init__(self):
@@ -27,7 +25,7 @@ class Frames:  # Класс фреймов, для подсчёта тиков
             if not self.jump:  # Прыжок только начинается или уже начат
                 self.start_jump = self.count
                 self.jump = True
-            if self.count - self.start_jump < FPS // 4:  # Проверка на то, что игрок ещё должен подниматься
+            if self.count - self.start_jump < const.FPS // 4:  # Проверка на то, что игрок ещё должен подниматься
                 player.moving('jump')
             else:  # Игрок должен начать падать
                 self.start_jump = 0
@@ -67,12 +65,12 @@ class Frames:  # Класс фреймов, для подсчёта тиков
         return up, down, left, right
 
     def make_enemy(self, player, room):  # Спавн врагов
-        if (self.count % (FPS * 8) == 0 or self.just_spawned) and self.angry:
+        if (self.count % (const.FPS * 8) == 0 or self.just_spawned) and self.angry:
             self.start_spawn = True
             self.first_spawn = self.count
             self.just_spawned = False
             room.enemys = 0
-        if (self.count - self.start_spawn) % FPS == 0 and self.start_spawn:
+        if (self.count - self.start_spawn) % const.FPS == 0 and self.start_spawn:
             if room.enemys % 2 == 0:
                 const.enemy.add(class_enemy.Enemy('right'))
             else:
@@ -86,7 +84,7 @@ class Frames:  # Класс фреймов, для подсчёта тиков
 
     def draw_hp(self, screen, player):
         if player.hp <= 0:
-            return None
+            return False
         for i in range(1, player.hp + 1):
             screen.blit(const.load_image("Здоровье.png", -1), (const.sprites * (i - 1), 0))
         return True

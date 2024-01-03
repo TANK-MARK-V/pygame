@@ -1,10 +1,5 @@
 import pygame
 import class_player
-import class_frame
-import class_introduce
-import class_button
-import class_pause
-import class_room
 import const
 
 if __name__ == '__main__':
@@ -15,13 +10,10 @@ if __name__ == '__main__':
     running = True
     screen = pygame.display.set_mode(const.size)
 
-    room = class_room.Room(screen)
-    pause = class_pause.Pause(screen, const.pause_size)
-    frame = class_frame.Frames()
-    inro = class_introduce.Introduce()
-    buttons = class_button.Buttons(screen)
     player = class_player.Player(const.load_image("герой.png", -1), 2, 1, 0, const.barotraum)
     const.player_group.add(player)
+
+    buttons, inro, pause, frame, room, attack = const.make_prep(screen)
 
     const.make_bloks()
 
@@ -35,11 +27,11 @@ if __name__ == '__main__':
             if event.type == pygame.MOUSEBUTTONDOWN:  # Нажата мышка
                 if buttons.pause:
                     if pause.check_do(pygame.mouse.get_pos(), const.pause_size):  # Проверка на нажатие паузы c мышки
-                        buttons = class_button.Buttons(screen, pause=True)
+                        buttons = const.make_prep(screen, True)
 
             if event.type == pygame.KEYDOWN:  # Нажата кнопка
-                if event.key == pygame.K_ESCAPE and buttons.start:  # Проверка на нажатие паузы через "esc"
-                    buttons = class_button.Buttons(screen, pause=True)
+                if event.key == pygame.K_ESCAPE and buttons.start:  # Проверка на нажатие паузы через "esc
+                    buttons = const.make_prep(screen, True)
 
                 if inro.question:  # Проверка на ответ игрока
                     if event.key == pygame.K_y:
@@ -49,6 +41,9 @@ if __name__ == '__main__':
                         inro.question = False
                         player.rect.x = const.width // 2 - const.sprites // 2
                         player.rect.y = const.floor[0][1] - const.sprites
+                        player.hp = 3
+                        player.count = 0
+                        player.killed = 0
 
                 if inro.ready:
                     if (event.key == pygame.K_w or event.key == pygame.K_UP) and not player.can_move[1]:
@@ -58,6 +53,9 @@ if __name__ == '__main__':
                         player.right = True
                     if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                         player.left = True
+                    if event.key == pygame.K_s or event.key == pygame.K_DOWN:
+                        attack.pressed = True
+                        attack.started = frame.count
             if event.type == pygame.KEYUP:  # Кнопку отпустили
                 if inro.ready:
                     if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
@@ -73,6 +71,7 @@ if __name__ == '__main__':
                 frame.check(player, buttons, room)
                 room.drawing()
                 running = frame.draw_hp(screen, player)  # Отрисовка здоровья игрока
+                attack.draw(screen, player, frame.count)
         if buttons.start:  # Игрок не в меню паузы
             pause.draw_pause()
         pygame.display.flip()

@@ -1,8 +1,6 @@
 import pygame
 import const
 
-FPS = const.FPS
-
 
 class Enemy(pygame.sprite.Sprite):  # Класс игрока
     def __init__(self, rotation='right'):
@@ -21,12 +19,12 @@ class Enemy(pygame.sprite.Sprite):  # Класс игрока
             if self.rotation == 'left':
                 self.image = pygame.transform.flip(self.image, True, False)
                 self.rotation = 'right'
-            self.rect = self.rect.move(FPS // 10, 0)
+            self.rect = self.rect.move(const.FPS // 10, 0)
         else:
             if self.rotation == 'right':
                 self.image = pygame.transform.flip(self.image, True, False)
                 self.rotation = 'left'
-            self.rect = self.rect.move(-FPS // 10, 0)
+            self.rect = self.rect.move(-const.FPS // 10, 0)
 
     def die(self):  # Яйцо умирает
         const.enemy.remove(self)
