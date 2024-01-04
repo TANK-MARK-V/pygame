@@ -5,7 +5,7 @@ import const
 class Introduce:  # Класс для показа вступления
     def __init__(self):
         self.ready = False  # Конец вступления
-        self.question = False  # Задат вопрос
+        self.question = False  # Задать вопрос
 
     def show(self, screen, player):  # Основные действия
         screen.blit(pygame.transform.scale(const.load_image('fon_nachalo_1.png'), const.size), (0, 0))
@@ -14,7 +14,7 @@ class Introduce:  # Класс для показа вступления
         screen.blit(
             pygame.transform.flip(pygame.transform.scale(image, (const.sprites, const.sprites)), True, False),
             (const.width - const.sprites - 50, const.barotraum))
-        if player.rect.x + const.sprites < const.width - const.sprites - 50 - 20:  # Игрок не дошёл
+        if player.rect.x + const.sprites < const.width - const.sprites - 50 - 20:  # Игрок ещё не дошёл
             player.moving('right')
         else:  # Дошёл
             self.give_quest(screen)

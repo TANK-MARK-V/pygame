@@ -2,14 +2,14 @@ import pygame
 import const
 
 
-class Buttons:  # Функция создания кнопок
+class Buttons:  # Класс кнопок
     def __init__(self, screen, pause=False):
-        screen.blit(pygame.transform.scale(const.load_image('zqwt.png'), const.size).convert_alpha(), (0, 0))
+        screen.blit(pygame.transform.scale(const.load_image('zqwt.png'), const.size), (0, 0))  # Задний фон меню
         font = pygame.font.Font(None, 120)
-        self.start = False
-        self.pause = pause
+        self.start = False  # Игра может идти
+        self.pause = pause  # Кнопка "Играть" или "Продолжить"
 
-        if not pause:
+        if not pause:  # Если игрок ещё не начал игру
             self.play = font.render("Играть", True, pygame.Color('yellow'))
         else:
             self.play = font.render("Продолжить", True, pygame.Color('yellow'))
@@ -51,7 +51,7 @@ class Buttons:  # Функция создания кнопок
             pygame.draw.rect(screen, pygame.Color('black'),
                              (coords[2], coords[0][1] + coords[2] + 10, coords[1][0], coords[1][1]), 1)
 
-    def menu(self, screen, event):
+    def menu(self, screen, event):  # Работа всего меню
         self.check_pos(screen, pygame.mouse.get_pos(), self.coords)  # Проверка на наводку на кнопку
         if event.type == pygame.MOUSEBUTTONDOWN:
             answer = self.check_do(pygame.mouse.get_pos(), self.coords)  # Проверка на нажатие на кнопку

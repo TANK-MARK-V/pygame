@@ -6,9 +6,9 @@ class Room:  # Класс для основной игры
     def __init__(self, screen):
         self.screen = screen
         self.image = pygame.transform.scale(const.load_image("Яичное место.png"), const.size)
-        self.bloks = const.bloks
-        self.enemys = 0
-        self.rade = 0
+        self.bloks = const.bloks  # Координаты блоков
+        self.enemys = 0  # Счёт спавна врагов (обновляется при новом рейде)
+        self.rade = 0  # Сколько раз спавнились враги (по 4 штуки, т.е спавн 12 яиц равняется 3 рейдам)
 
     def drawing(self):  # Все объекты
         self.screen.blit(self.image, (0, 0))
@@ -17,7 +17,7 @@ class Room:  # Класс для основной игры
         const.enemy.draw(self.screen)
 
     def draw_bloks(self, bloks):  # Блоки земли, на которые можно наступать
-        grass = pygame.Color(16, 82, 36)
+        grass = pygame.Color(16, 82, 36)  # Цвет блоков
         pygame.draw.rect(self.screen, grass, const.floor, 0)
         pygame.draw.rect(self.screen, grass,
                          ((bloks[0][0], bloks[0][1]), (bloks[0][2] - bloks[0][0], bloks[0][3] - bloks[0][1])), 0)

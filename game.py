@@ -18,7 +18,6 @@ if __name__ == '__main__':
     const.make_bloks()
 
     while running:
-        player.frem = frame.count
         for event in pygame.event.get():
             if not buttons.start:
                 running = buttons.menu(screen, event)  # Открытие меню
