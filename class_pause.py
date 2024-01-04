@@ -5,7 +5,7 @@ class Pause:  # Класс вызова паузы
         self.screen = screen
         self.size = size
 
-    def draw_pause(self):
+    def draw_pause(self):  # Отрисовка паузы
         pygame.draw.rect(self.screen, pygame.Color('grey'),
                          ((self.size[0], self.size[1]), (self.size[1], self.size[1])), 2)
         pygame.draw.line(self.screen, pygame.Color('grey'),
