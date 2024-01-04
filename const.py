@@ -31,7 +31,7 @@ floor = ((0, height - floor), (width, floor))  # Координаты пола
 player_group = pygame.sprite.Group()  # Создание групп
 enemy = pygame.sprite.Group()
 
-down = pygame.sprite.Group()
+down = pygame.sprite.Group()  # Стенки для коллизии
 up = pygame.sprite.Group()
 left = pygame.sprite.Group()
 right = pygame.sprite.Group()
