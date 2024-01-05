@@ -10,11 +10,14 @@ class Room:  # Класс для основной игры
         self.enemys = 0  # Счёт спавна врагов (обновляется при новом рейде)
         self.rade = 0  # Сколько раз спавнились враги (по 4 штуки, т.е спавн 12 яиц равняется 3 рейдам)
 
-    def drawing(self):  # Все объекты
+    def drawing(self, screen, damage):  # Все объекты
         self.screen.blit(self.image, (0, 0))
         self.draw_bloks(self.bloks)
         const.player_group.draw(self.screen)
         const.enemy.draw(self.screen)
+        if damage > 0:  # Сколько урона боссу
+            screen.blit(pygame.font.Font(None, 120).render(f"{damage}", True, pygame.Color('yellow')),
+                        (0, const.sprites))
 
     def draw_bloks(self, bloks):  # Блоки земли, на которые можно наступать
         grass = pygame.Color(16, 82, 36)  # Цвет блоков

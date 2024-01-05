@@ -1,5 +1,6 @@
 import pygame
 import class_player
+import class_boss
 import const
 
 if __name__ == '__main__':
@@ -13,7 +14,11 @@ if __name__ == '__main__':
     player = class_player.Player(const.load_image("герой.png", -1), 2, 1, 0, const.barotraum)  # Создание игрока
     const.player_group.add(player)
 
+    boss = class_boss.Boss()
+    const.boss_group.add(boss)
+
     buttons, inro, pause, frame, room, attack = const.make_prep(screen)  # Создание классов
+    const.boss_group.add(boss)
 
     const.make_bloks()
 
@@ -72,10 +77,11 @@ if __name__ == '__main__':
             if not inro.ready:  # Проигрывание вступительного ролика
                 inro.show(screen, player)
             else:  # Основная часть игры
-                frame.check(player, buttons, room)  # Счёт фреймов
-                room.drawing()  # Отрисовка блоков
+                frame.check(player, buttons, room, boss)  # Счёт фреймов
+                room.drawing(screen, boss.damage * 100)  # Отрисовка блоков
                 running = frame.draw_hp(screen, player)  # Отрисовка здоровья игрока
-                attack.draw(screen, player, frame.count)  # Отрисовка удара ложкой
+                const.boss_group.draw(screen)
+                attack.draw(screen, player, boss, frame.count)  # Отрисовка удара ложкой
             pause.draw_pause()  # Отрисовка кнопки паузы
         pygame.display.flip()
         clock.tick(FPS)

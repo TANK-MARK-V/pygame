@@ -10,7 +10,7 @@ class Attack(pygame.sprite.Sprite):  # Атака врагов
         self.pressed = False  # Кнопка была нажата
         self.started = 0  # Тик, на котором была нажата кнопка
 
-    def draw(self, screen, player, tick):  # Отрисовка ложки
+    def draw(self, screen, player, boss, tick):  # Отрисовка ложки
         self.rect = player.rect  # Ложка получает координаты игрока
         if self.reverse == player.reverse:  # Ложка поворачивается в сторону игрока
             self.image = pygame.transform.flip(self.image, True, False)
@@ -23,4 +23,7 @@ class Attack(pygame.sprite.Sprite):  # Атака врагов
             screen.blit(self.image, (self.rect.x, self.rect.y))
             if pygame.sprite.spritecollide(self, const.enemy, True):  # Убийство яиц
                 player.killed += 1
+        if self.pressed and pygame.sprite.spritecollide(self, const.boss_group, False):  # Урон боссу
+            boss.damage += 1
+            boss.hits += 1
         self.pressed = False
