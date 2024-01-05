@@ -21,7 +21,7 @@ pause_size = (width - pause_size * 2, pause_size)
 sprites = int(width * 0.067)  # 128х128 при полном экране
 barotraum = height - sprites - 50
 floor = 80  # Толщина пола
-bloks = (300, 100, 150)  # Размеры блоков
+bloks = (300, 100, 150)  # Длинна крайних платформ, их высота, высота до них
 bloks = ((0, height - floor - bloks[2] - bloks[1], bloks[0], height - floor - bloks[2]),  # Координаты блоков
          (width - bloks[0], height - floor - bloks[2] - bloks[1], width, height - floor - bloks[2]),
          (bloks[0] + 150, height - floor - bloks[2] * 2 - bloks[1] - height // 19,
@@ -30,6 +30,7 @@ floor = ((0, height - floor), (width, floor))  # Координаты пола
 
 player_group = pygame.sprite.Group()  # Создание групп
 enemy = pygame.sprite.Group()
+boss_group = pygame.sprite.Group()
 
 down = pygame.sprite.Group()  # Стенки для коллизии
 up = pygame.sprite.Group()

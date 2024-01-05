@@ -11,9 +11,10 @@ class Buttons:  # Класс кнопок
 
         if not pause:  # Если игрок ещё не начал игру
             self.play = font.render("Играть", True, pygame.Color('yellow'))
+            self.ekcit = font.render("Выйти", True, pygame.Color('yellow'))
         else:
             self.play = font.render("Продолжить", True, pygame.Color('yellow'))
-        self.ekcit = font.render("Выйти", True, pygame.Color('yellow'))
+            self.ekcit = font.render("Завершить игру", True, pygame.Color('yellow'))
         # Написание текста
 
         self.otstup = 20  # Левый верхний угол для вертикального расположения кнопок
@@ -34,6 +35,8 @@ class Buttons:  # Класс кнопок
         elif pos[0] in range(coords[2], coords[2] + coords[1][0]) and pos[1] in range(coords[0][1] + coords[2] + 10,
                                                                                       (coords[0][1] + coords[2] + 10) +
                                                                                       coords[1][1]):
+            if self.pause:
+                return 'Закончить'
             return 'Выйти'
 
     def check_pos(self, screen, pos, coords):  # Функция для отрисовки прямоугольников при наведении на кнопку
@@ -54,9 +57,5 @@ class Buttons:  # Класс кнопок
     def menu(self, screen, event):  # Работа всего меню
         self.check_pos(screen, pygame.mouse.get_pos(), self.coords)  # Проверка на наводку на кнопку
         if event.type == pygame.MOUSEBUTTONDOWN:
-            answer = self.check_do(pygame.mouse.get_pos(), self.coords)  # Проверка на нажатие на кнопку
-            if answer == 'Играть':
-                self.start = True
-            elif answer == 'Выйти':
-                return False
+            return self.check_do(pygame.mouse.get_pos(), self.coords)  # Проверка на нажатие на кнопку
         return True

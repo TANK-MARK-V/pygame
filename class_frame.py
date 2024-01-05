@@ -16,7 +16,7 @@ class Frames:  # Класс фреймов, для подсчёта тиков
         self.angry = True  # Игрок не может пройти к боссу
         self.just_spawned = True  # Первый спавн врагов
 
-    def check(self, player, buttons, room):  # Основная функция
+    def check(self, player, buttons, room, boss):  # Основная функция
         if buttons.start:
             self.count += 1  # Счёт фреймов
         self.make_enemy(player, room)  # Спавн врагов
@@ -39,6 +39,11 @@ class Frames:  # Класс фреймов, для подсчёта тиков
         if player.left:
             player.moving('left')
         const.enemy.update(player)
+        if boss.hits >= 3:  # Босс получил 3 удара
+            boss.hits = 0
+            self.angry = True
+            player.rect = player.rect.move(0, const.floor[0][1] - const.sprites * 1.5 - player.rect.y)  # Игрок падает
+        boss.update(self.angry)
         if pygame.sprite.spritecollide(player, const.enemy, True):  # Получение урона
             player.hp -= 1
             player.killed += 1
@@ -81,10 +86,12 @@ class Frames:  # Класс фреймов, для подсчёта тиков
             room.rade += 1
         if room.rade % 3 == 0 and room.rade != 0 and player.killed % 4 == 0:  # Если игрок убил всех и прошло 3 рейда
             self.angry = False
+            room.rade = 0
 
     def draw_hp(self, screen, player):
         if player.hp <= 0:
             return False
         for i in range(1, player.hp + 1):
-            screen.blit(const.load_image("Здоровье.png", -1), (const.sprites * (i - 1), 0))
+            screen.blit(pygame.transform.scale(const.load_image("Здоровье.png", -1), (const.sprites, const.sprites)),
+                        (const.sprites * (i - 1), 0))
         return True
